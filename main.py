@@ -8,15 +8,15 @@ def zipdir(path, ziph):
             ziph.write(os.path.join(root, file))
 
 if __name__ == '__main__':
-    zipf = zipfile.ZipFile('sum.zip', 'w', zipfile.ZIP_DEFLATED)
-    zipdir('files/sum/', zipf)
+    zipf = zipfile.ZipFile('files/zip/sum.zip', 'w', zipfile.ZIP_DEFLATED)
+    zipdir('files/sum', zipf)
     zipf.close()
 
-    zipf = zipfile.ZipFile('alice.zip', 'w', zipfile.ZIP_DEFLATED)
-    zipdir('files/alice/', zipf)
+    zipf = zipfile.ZipFile('files/zip/alice.zip', 'w', zipfile.ZIP_DEFLATED)
+    zipdir('files/alice', zipf)
     zipf.close()
 
-""" import os
+"""  import os
 import zipfile
 
 def zipdir(path, outputfile):
