@@ -1,32 +1,9 @@
-import os
-import zipfile
+from Huffman import Huffman
 
-def zipdir(path, ziph):
-    # ziph is zipfile handle
-    for root, dirs, files in os.walk(path):
-        for file in files:
-            ziph.write(os.path.join(root, file))
+#input file path
+path = "alice.txt"
 
-if __name__ == '__main__':
-    zipf = zipfile.ZipFile('files/zip/sum.zip', 'w', zipfile.ZIP_DEFLATED)
-    zipdir('files/sum', zipf)
-    zipf.close()
+h = Huffman(path)
 
-    zipf = zipfile.ZipFile('files/zip/alice.zip', 'w', zipfile.ZIP_DEFLATED)
-    zipdir('files/alice', zipf)
-    zipf.close()
-
-"""  import os
-import zipfile
-
-def zipdir(path, outputfile):
-    # ziph is zipfile handle
-    zipf = zipfile.ZipFile(outputfile, 'w', zipfile.ZIP_DEFLATED)
-    for root, dirs, files in os.walk(path):
-        for file in files:
-            zipf.write(os.path.join(root, file))
-    zipf.close()
-
-
-zipdir('file/sum', 'sum.zip')
-zipdir('files/sum/sum', 'alice.zip') """
+output_path = h.compress()
+h.decompress(output_path)
