@@ -1,3 +1,4 @@
+import sys
 import heapq
 import os
 from HeapNode import HeapNode
@@ -12,7 +13,7 @@ class Huffman:
 		self.reverse_mapping = {}
 
 #input file path
-path = "alice.txt"
+path = sys.argv[1]
 
 hc = HuffmanCompressor(path)
 output_path = hc.compress()
