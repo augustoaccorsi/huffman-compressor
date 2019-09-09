@@ -1,5 +1,6 @@
 import heapq
 import os
+import zlib
 from HeapNode import HeapNode
 
 class HuffmanCompressor:
@@ -8,6 +9,13 @@ class HuffmanCompressor:
 		self.heap = []
 		self.codes = {}
 		self.reverse_mapping = {}
+		self.crc = 0
+
+	def calculate_crc(self, fileName):
+		prev = 0
+		for eachLine in open(fileName,"rb"):
+			prev = zlib.crc32(eachLine, prev)
+		return "{0:b}".format(int("%X"%(prev & 0xFFFFFFFF), 16))
 
 	def get_path(self):
 		return self.path
@@ -80,6 +88,14 @@ class HuffmanCompressor:
 			exit(0)
 
 		b = bytearray()
+		"""
+		1100110000000000111110110111010
+		1711308218
+		"""
+		for i in range(0, len(self.crc), 8):
+			byte = self.crc[i:i+8]
+			b.append(int(byte, 2))
+
 		for i in range(0, len(padded_encoded_text), 8):
 			byte = padded_encoded_text[i:i+8]
 			b.append(int(byte, 2))
@@ -89,6 +105,8 @@ class HuffmanCompressor:
 	def compress(self):
 		filename = os.path.splitext(self.path)
 		output_path = filename[0] + ".bin"
+
+		self.crc = self.calculate_crc(self.path)
 
 		with open(self.path, 'r+') as file, open(output_path, 'wb') as output:
 			text = file.read()
