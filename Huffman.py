@@ -5,13 +5,6 @@ from HeapNode import HeapNode
 from HuffmanDecompressor import HuffmanDecompressor
 from HuffmanCompressor import HuffmanCompressor
 
-class Huffman:
-	def __init__(self, path):
-		self.path = path
-		self.heap = []
-		self.codes = {}
-		self.reverse_mapping = {}
-
 #input file path
 path = sys.argv[1]
 
