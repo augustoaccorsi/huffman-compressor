@@ -128,5 +128,5 @@ class HuffmanCompressor:
 			b = self.get_byte_array(padded_encoded_text)
 			output.write(bytes(b))
 
-		print("Compressed")
+		print("File "+self.path+" compressed as"+output_path)
 		return output_path	

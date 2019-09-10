@@ -58,5 +58,5 @@ class HuffmanDecompressor:
 			
 			output.write(decompressed_text)
 
-		print("Decompressed")
+		print("File "+input_path+" decompressed as "+output_path)
 		return output_path
