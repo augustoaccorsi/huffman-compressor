@@ -19,6 +19,9 @@ class HuffmanCompressor:
 
 	def get_path(self):
 		return self.path
+		
+	def get_crc(self):
+		return self.crc
 	
 	def get_reverse_mapping(self):
 		return self.reverse_mapping
@@ -89,9 +92,10 @@ class HuffmanCompressor:
 
 		b = bytearray()
 		"""
-		1100110000000000111110110111010
+		10101011110110101111110011000110
 		1711308218
 		"""
+		#print(self.crc)
 		for i in range(0, len(self.crc), 8):
 			byte = self.crc[i:i+8]
 			b.append(int(byte, 2))
@@ -100,7 +104,8 @@ class HuffmanCompressor:
 			byte = padded_encoded_text[i:i+8]
 			b.append(int(byte, 2))
 		return b
-
+		
+		print(self.crc)
 
 	def compress(self):
 		filename = os.path.splitext(self.path)

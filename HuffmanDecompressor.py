@@ -1,13 +1,22 @@
 import heapq
 import os
+import sys
 
 class HuffmanDecompressor:
 	def __init__(self, compressor):
 		self.path = compressor.get_path()
 		self.reverse_mapping = compressor.get_reverse_mapping()
+		self.crc = compressor.get_crc()
+	
+	def validate_crc(self, crc_from_input):
+		if(self.crc != crc_from_input):
+			sys.exit("File with error")
 
 	def remove_padding(self, padded_encoded_text):
-		padded_info = padded_encoded_text[:8]
+		padded_info = padded_encoded_text[len(self.crc):len(self.crc)+8]
+		
+		self.validate_crc(padded_encoded_text[:len(self.crc)])
+
 		extra_padding = int(padded_info, 2)
 
 		padded_encoded_text = padded_encoded_text[8:] 
