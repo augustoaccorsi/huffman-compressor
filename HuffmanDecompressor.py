@@ -14,15 +14,10 @@ class HuffmanDecompressor:
 			sys.exit("File with error")
 
 	def remove_padding(self, padded_encoded_text):
-		padded_info = padded_encoded_text[len(self.crc):len(self.crc)+8]
-		
-		self.validate_crc(padded_encoded_text[:len(self.crc)])
-
+		padded_info = padded_encoded_text[:8]
 		extra_padding = int(padded_info, 2)
-
-		padded_encoded_text = padded_encoded_text[8:] 
-		encoded_text = padded_encoded_text[:-1*extra_padding]
-
+		padded_encoded_text = padded_encoded_text[8:]
+		encoded_text = padded_encoded_text[:-extra_padding]
 		return encoded_text
 
 	def decode_text(self, encoded_text):
@@ -38,6 +33,9 @@ class HuffmanDecompressor:
 
 		return decoded_text
 
+	def remove_crc(self, bit_string):		
+		self.validate_crc(bit_string[:len(self.crc)])
+		return bit_string[len(self.crc):]
 
 	def decompress(self, input_path):
 		filename = os.path.splitext(self.path)
@@ -48,12 +46,12 @@ class HuffmanDecompressor:
 
 			byte = file.read(1)
 			while(len(byte) > 0):
-				byte = ord(byte)
+				byte = ord(byte)				
 				bits = bin(byte)[2:].rjust(8, '0')
 				bit_string += bits
 				byte = file.read(1)
 
-			encoded_text = self.remove_padding(bit_string)
+			encoded_text = self.remove_padding(self.remove_crc(bit_string))
 
 			decompressed_text = self.decode_text(encoded_text)
 			
