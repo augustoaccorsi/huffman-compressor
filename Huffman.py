@@ -14,11 +14,8 @@ output_path = hc.compress()
 hd = HuffmanDecompressor(hc)
 decompressed_path = hd.decompress(output_path)
 
-print(path)
-print(decompressed_path)
-
 if(filecmp.cmp(path, decompressed_path)):
-    print("Files are ideintical")
+    print("Files are identical")
 else:
     print("Files not identical")
 
