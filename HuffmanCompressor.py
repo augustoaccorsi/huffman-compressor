@@ -23,6 +23,12 @@ class HuffmanCompressor:
 	def get_crc(self):
 		return self.crc
 	
+	def get_file_type(self):
+		if ".txt" in self.path:
+			return ".txt"
+		else:
+			return ""
+	
 	def get_reverse_mapping(self):
 		return self.reverse_mapping
 
@@ -90,12 +96,12 @@ class HuffmanCompressor:
 			print("Encoded text not padded properly")
 			exit(0)
 
-		b = bytearray()
-		"""
-		10101011110110101111110011000110
-		1711308218
-		"""
-		#print(self.crc)
+		b = bytearray()	
+
+		if(len(self.crc) < 32):
+			for i in range(32-len(self.crc)):
+				self.crc = "0" + str(self.crc)
+		
 		for i in range(0, len(self.crc), 8):
 			byte = self.crc[i:i+8]
 			b.append(int(byte, 2))
@@ -104,16 +110,20 @@ class HuffmanCompressor:
 			byte = padded_encoded_text[i:i+8]
 			b.append(int(byte, 2))
 		return b
-		
-		print(self.crc)
 
 	def compress(self):
 		filename = os.path.splitext(self.path)
 		output_path = filename[0] + ".bin"
 
 		self.crc = self.calculate_crc(self.path)
+	
+		file_type = ''
+		if ".txt" in self.path:
+			file_type = 'r+'
+		else:
+			file_type = 'r+b'
 
-		with open(self.path, 'r+') as file, open(output_path, 'wb') as output:
+		with open(self.path, file_type) as file, open(output_path, 'wb') as output:
 			text = file.read()
 			text = text.rstrip()
 
@@ -128,5 +138,5 @@ class HuffmanCompressor:
 			b = self.get_byte_array(padded_encoded_text)
 			output.write(bytes(b))
 
-		print("File "+self.path+" compressed as"+output_path)
+		print("File "+self.path+" compressed as "+output_path)
 		return output_path	

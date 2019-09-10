@@ -7,6 +7,7 @@ class HuffmanDecompressor:
 		self.path = compressor.get_path()
 		self.reverse_mapping = compressor.get_reverse_mapping()
 		self.crc = compressor.get_crc()
+		self.file_type = compressor.get_file_type()
 	
 	def validate_crc(self, crc_from_input):
 		if(self.crc != crc_from_input):
@@ -32,7 +33,7 @@ class HuffmanDecompressor:
 			current_code += bit
 			if(current_code in self.reverse_mapping):
 				character = self.reverse_mapping[current_code]
-				decoded_text += character
+				decoded_text += str(character)
 				current_code = ""
 
 		return decoded_text
@@ -40,7 +41,7 @@ class HuffmanDecompressor:
 
 	def decompress(self, input_path):
 		filename = os.path.splitext(self.path)
-		output_path = filename[0] + "_decompressed" + ".txt"
+		output_path = filename[0] + "_decompressed" + self.file_type
 
 		with open(input_path, 'rb') as file, open(output_path, 'w') as output:
 			bit_string = ""
