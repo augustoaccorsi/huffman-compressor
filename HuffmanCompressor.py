@@ -10,6 +10,7 @@ class HuffmanCompressor:
 		self.codes = {}
 		self.reverse_mapping = {}
 		self.crc = 0
+		self.text = ""
 
 	def calculate_crc(self, fileName):
 		prev = 0
@@ -24,10 +25,8 @@ class HuffmanCompressor:
 		return self.crc
 	
 	def get_file_type(self):
-		if ".txt" in self.path:
-			return ".txt"
-		else:
-			return ""
+		file_type = os.path.splitext(self.path)
+		return file_type[len(file_type)-1]
 	
 	def get_reverse_mapping(self):
 		return self.reverse_mapping
@@ -127,6 +126,8 @@ class HuffmanCompressor:
 			text = file.read()
 			text = text.rstrip()
 
+			self.text = text
+
 			frequency = self.make_frequency_dict(text)
 			self.make_heap(frequency)
 			self.merge_nodes()
@@ -134,8 +135,8 @@ class HuffmanCompressor:
 
 			encoded_text = self.get_encoded_text(text)
 			padded_encoded_text = self.pad_encoded_text(encoded_text)
-
 			b = self.get_byte_array(padded_encoded_text)
+
 			output.write(bytes(b))
 
 		print("File "+self.path+" compressed as "+output_path)
