@@ -9,14 +9,6 @@ class HuffmanDecompressor:
 		self.crc = compressor.get_crc()
 		self.file_type = compressor.get_file_type()
 	
-	def bitstring_to_bytes(self, s):
-		v = int(s, 2)
-		b = bytearray()
-		while v:
-			b.append(v & 0xff)
-			v >>= 8
-		return bytes(b[::-1])
-
 	def validate_crc(self, crc_from_input):
 		if(self.crc != crc_from_input):
 			sys.exit("File with error")
