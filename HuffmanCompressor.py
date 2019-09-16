@@ -10,7 +10,6 @@ class HuffmanCompressor:
 		self.codes = {}
 		self.reverse_mapping = {}
 		self.crc = 0
-		self.text = ""
 
 	def calculate_crc(self, fileName):
 		prev = 0
@@ -125,7 +124,6 @@ class HuffmanCompressor:
 		with open(self.path, file_type) as file, open(output_path, 'wb') as output:
 			text = file.read()
 			text = text.rstrip()
-
 			self.text = text
 
 			frequency = self.make_frequency_dict(text)
