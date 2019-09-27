@@ -10,8 +10,10 @@
 
 ### Execução do programa
 
-`python Huffman.py files\alice29.txt` para comprimir e descombrimir o arquivo alice.29.txt
+`python Huffman.py files\alice29.txt` para executar o arquivo alice.29.txt
 
-`python Huffman.py files\sum` para comprimir e descombrimir o arquivo sum
+`python Huffman.py files\sum` para executar o arquivo sum
+
+`python Huffman.py` para executar os dois arquivos
 
 * Uma vez que o algoritmo é executado, ele cria dois arquivos novos na mesma pasta do arquivo que foi passado parametro. Um arquivo binário comprimido, e um arquivo, do mesmo formato do inicial, descomprimido
